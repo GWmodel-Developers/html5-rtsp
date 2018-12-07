@@ -18,6 +18,10 @@
     "pack:renderer": "cross-env NODE_ENV=production webpack --progress --colors --config .electron-vue/webpack.renderer.config.js",
     "postinstall": "npm run lint:fix"
   },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:HPDell/electron-rtmp.git"
+  },
   "build": {
     "productName": "test-electron-rtmp",
     "appId": "com.example.yourapp",
