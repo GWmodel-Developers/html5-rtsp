@@ -1,0 +1,8 @@
+{
+	"server": {
+		"host": "localhost",
+		"port": 8080
+	},
+	"cruiseTimeSpan": 10000,
+	"installDate": "2018/12/6"
+}
