@@ -1,7 +1,10 @@
 import { app, BrowserWindow } from 'electron'
 import * as url from 'url';
 import * as path from 'path';
-import * as flashTrust from 'nw-flash-trust'
+import * as flashTrust from 'nw-flash-trust-a'
+import { createReadStream } from 'fs';
+import * as express from "express";
+import { appendFile } from 'fs';
 
 /**
  * Set `__static` path to static files in production
@@ -14,18 +17,15 @@ if (process.env.NODE_ENV !== 'development') {
 let mainWindow
 const winURL = process.env.NODE_ENV === 'development'
   ? `http://localhost:9082`
-  : `file://${__dirname}/index.html`
+  : `http://localhost:8888/index.html`
 
   
 let flashPath = app.getPath('pepperFlashSystemPlugin');
 console.log(flashPath);
 
 app.commandLine.appendSwitch("ppapi-flash-path", flashPath);
-app.commandLine.appendSwitch('ppapi-flash-version', '29.0.0.013');
+// app.commandLine.appendSwitch('ppapi-flash-version', '29.0.0.013');
 app.commandLine.appendSwitch('disable-web-security');
-
-let trustManager = flashTrust.initSync("test-electron-rtmp");
-trustManager.add("rtmp://live.hkstv.hk.lxdns.com/live/hks2")
 
 function createWindow () {
   /**
@@ -37,16 +37,9 @@ function createWindow () {
     width: 1000,
     frame: true,
     webPreferences: {
-      plugins: true,
-      webSecurity: false
-    },
+      plugins: true
+    }
   })
-
-  let swfUrl = url.format({
-    pathname: path.join(__dirname, 'bookmark.swf'),
-    protocol: "file:",
-    slashes: true
-  });
 
   mainWindow.loadURL(winURL)
 
@@ -55,6 +48,22 @@ function createWindow () {
   mainWindow.on('closed', () => {
     mainWindow = null
   })
+
+  if (process.env.NODE_ENV === "production") {
+    let installExtension = require('electron-devtools-installer')
+    installExtension.default(installExtension.VUEJS_DEVTOOLS)
+      .then(() => {})
+      .catch(err => {
+        console.log('Unable to install `vue-devtools`: \n', err)
+      })
+    localServer();
+  }
+}
+
+function localServer() {
+  let server = express();
+  server.use(express.static(__dirname));
+  server.listen(8888);
 }
 
 app.on('ready', createWindow)
