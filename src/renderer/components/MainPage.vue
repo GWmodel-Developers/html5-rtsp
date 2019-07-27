@@ -5,36 +5,23 @@
             <source src="rtmp://127.0.0.1/live/" type="rtmp/flv">
         </video> -->
         <!-- <embed src="/static/video-js.swf"> -->
-        <video-player :options="playerOptions" :playsinline="true" @statechanged="playerStateChanged($event)"></video-player>
+        <div v-for="i in 3" :key="`video-${i}`" class="flex-row">
+            <video-player :videoID="(i - 1)*3 + 1"></video-player>
+            <video-player :videoID="(i - 1)*3 + 2"></video-player>
+            <video-player :videoID="(i - 1)*3 + 3"></video-player>
+        </div>
     </div>
 </template>
 
 <script>
-import VideoPlayer from "./player.vue"
+import FlvPlayerVue from './FlvPlayer.vue';
 export default {
     components: {
-        "video-player": VideoPlayer
+        "video-player": FlvPlayerVue
     },
     data () {
         return {
-            playerOptions: {
-                sources: [{
-                    type: "rtmp/flv",
-                    src: "rtmp://live.hkstv.hk.lxdns.com/live/hks2"
-                }],
-                techOrder: ['flash'],
-                autoplay: true,
-                controls: true,
-                flash: {
-                    swf: "static/video-js.swf"
-                },
-                height: "320"
-            }
-        }
-    },
-    methods: {
-        playerStateChanged (state) {
-            console.log(state)
+            
         }
     },
     mounted() {
@@ -42,3 +29,14 @@ export default {
     }
 }
 </script>
+
+<style>
+.flex-row {
+    display: flex;
+    flex-direction: row;
+}
+
+.flex-row > div {
+    margin-right: 5px;
+}
+</style>
