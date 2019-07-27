@@ -62,6 +62,9 @@
     "@types/express": "^4.16.0",
     "axios": "^0.18.0",
     "express": "^4.16.4",
+    "express-ws": "^4.0.0",
+    "fluent-ffmpeg": "^2.1.2",
+    "flv.js": "^1.5.0",
     "nw-flash-trust-a": "^0.4.6",
     "video.js": "7.3.0",
     "videojs-flash": "^2.1.2",
@@ -69,7 +72,8 @@
     "vue-electron": "^1.0.6",
     "vue-router": "^3.0.1",
     "vuex": "^3.0.1",
-    "vuex-electron": "^1.0.0"
+    "vuex-electron": "^1.0.0",
+    "websocket-stream": "^5.5.0"
   },
   "devDependencies": {
     "ajv": "^6.5.0",
